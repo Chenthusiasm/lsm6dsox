@@ -9,6 +9,7 @@ extern "C"
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+#include "lsm6dsox_helper.h"
 
 /* Stub Functions */
 
@@ -34,13 +35,14 @@ protected:
 
     void InitLSM6DSOXHelper()
     {
-
+        helper_init();
     }
 };
 
 /* Test the static writeRegister function. */
 TEST_F(lsm6dsoxUnitTest, writeRegister)
 {
+    EXPECT_EQ()
     //writeRegister(lsm6dsox_reg_CTRL2_G);
 }
 

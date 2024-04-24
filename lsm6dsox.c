@@ -33,6 +33,9 @@
 /// register.
 #define CTRL5_C_ROUNDING_EN_GYRO_MASK                       (0x02)
 
+/// Mask to apply to the register address when performing a SPI read.
+#define SPI_READ_REG_MASK                                   (0x80)
+
 
 // === TYPE DEFINES ============================================================
 
@@ -213,7 +216,7 @@ static void writeRegister(lsm6dsox_reg_t reg, uint8_t val)
 /// @return The 8-bit value at the register.
 static uint8_t readRegister(lsm6dsox_reg_t reg)
 {
-    uint8_t temp = reg;
+    uint8_t temp = reg | SPI_READ_REG_MASK;
     lsm6dsoxComm_write(&temp, sizeof(temp));
     uint8_t value = 0u;
     lsm6dsoxComm_read(&value, sizeof(value));
@@ -230,7 +233,7 @@ static uint16_t readRegisterMulti(lsm6dsox_reg_t reg, uint8_t* dataPtr, uint16_t
     if ((dataPtr == NULL) || (dataLength == 0u))
         return 0u;
 
-    uint8_t temp = reg;
+    uint8_t temp = reg | SPI_READ_REG_MASK;
     lsm6dsoxComm_write(&temp, sizeof(temp));
     return lsm6dsoxComm_read(dataPtr, dataLength);
 }
